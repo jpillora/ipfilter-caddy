@@ -1,4 +1,4 @@
-package main
+package ipfiltercaddy
 
 import (
 	"fmt"
@@ -6,15 +6,11 @@ import (
 
 	"github.com/caddyserver/caddy/v2"
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
-	caddycmd "github.com/caddyserver/caddy/v2/cmd"
+
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 	"github.com/jpillora/ipfilter"
 	"go.uber.org/zap"
 )
-
-func main() {
-	caddycmd.Main()
-}
 
 // Interface guards
 var (
