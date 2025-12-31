@@ -2,10 +2,10 @@
 
 ## 🚀 Publishing Steps
 
-### Phase 2: Registry Submission
+### Phase 2: Package Registration
 
 #### 2.1 Plugin Requirements Verification
-**Objective**: Ensure plugin meets Caddy registry standards
+**Objective**: Ensure plugin meets Caddy registration standards
 
 **Requirements Checklist**:
 - [x] Compatible with current Caddy version (v2.7+)
@@ -15,40 +15,29 @@
 - [x] Complete documentation with usage examples
 - [x] MIT license for open source compatibility
 
-#### 2.2 Registry Pull Request Submission
-**Objective**: Submit plugin for official registry inclusion
+#### 2.2 Register Package via Caddy Portal
+**Objective**: Register plugin through official Caddy account portal
 
 **Process**:
-1. **Fork Registry Repository**:
-   - Fork `caddyserver/registry` from https://github.com/caddyserver/registry
+1. **Access Registration Portal**:
+   - Visit https://caddyserver.com/account/register-package
+   - Sign in with GitHub account (create account if needed)
 
-2. **Add Plugin Entry**:
-   - Locate `index.json` file in the registry
-   - Add new entry under the appropriate category (HTTP matchers)
-   - Include complete plugin metadata
+2. **Submit Package Information**:
+   - **Package import path**: `github.com/jpillora/ipfilter-caddy`
+   - **Version**: Leave blank for latest/main branch
+   - Click "Claim Package"
 
-3. **Registry Entry Format**:
-   ```json
-   {
-     "github.com/jpillora/ipfilter-caddy": {
-       "description": "Geolocation-based IP filtering for Caddy using IP2Location LITE data",
-       "homepage": "https://github.com/jpillora/ipfilter-caddy",
-       "license": "MIT",
-       "module_name": "github.com/jpillora/ipfilter-caddy"
-     }
-   }
-   ```
+3. **Verification**:
+   - Caddy will verify the package exists and is accessible
+   - Plugin will appear in official Caddy module documentation
+   - Package becomes available via Caddy download page
 
-4. **Submit Pull Request**:
-   - Create PR with clear description of plugin functionality
-   - Reference plugin repository and documentation
-   - Include test results and compatibility verification
-
-#### 2.3 Review and Approval
-**Timeline**: 1-2 weeks for initial review
-- Caddy maintainers review code quality and compliance
-- May request changes or additional documentation
-- Upon approval, plugin becomes available in official registry
+#### 2.3 Confirmation
+**Timeline**: Immediate upon successful registration
+- Plugin appears in https://caddyserver.com/download package selection
+- Listed in official Caddy modules documentation
+- Available for `xcaddy build --with github.com/jpillora/ipfilter-caddy`
 
 ### Phase 3: Post-Registry Updates
 
