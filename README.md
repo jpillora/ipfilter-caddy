@@ -96,10 +96,6 @@ caddy add-package github.com/jpillora/ipfilter-caddy
 ### Caddyfile Configuration
 
 ```caddyfile
-{
-    order ipfilter_geolocation first
-}
-
 example.com {
     @allowed_countries {
         ipfilter_geolocation {
