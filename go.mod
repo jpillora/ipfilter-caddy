@@ -1,4 +1,4 @@
-module github.com/opencode-projects/ipfilter-caddy
+module github.com/jpillora/ipfilter-caddy
 
 go 1.22.3
 
