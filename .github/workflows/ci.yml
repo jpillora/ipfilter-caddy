@@ -75,4 +75,9 @@ jobs:
     - name: Run xcaddy build test
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-        ~/go/bin/xcaddy build --with github.com/jpillora/ipfilter-caddy
+        export GOBIN=$HOME/go/bin
+        if [ "$RUNNER_OS" = "macOS" ]; then
+          ~/go/bin/xcaddy build --with .
+        else
+          ~/go/bin/xcaddy build --with github.com/jpillora/ipfilter-caddy
+        fi
