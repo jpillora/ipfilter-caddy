@@ -14,8 +14,8 @@
 # Dependency directories (remove the comment below to include it)
 vendor/
 
-# Go workspace file
-go.work
+# Go workspace file (uncomment for local development)
+# go.work
 
 # Build artifacts
 ipfilter-caddy
