@@ -1,7 +1,7 @@
 # IPFilter Caddy Plugin
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/opencode-projects/ipfilter-caddy.svg)](https://pkg.go.dev/github.com/opencode-projects/ipfilter-caddy)
-[![Go Report Card](https://goreportcard.com/badge/github.com/opencode-projects/ipfilter-caddy)](https://goreportcard.com/report/github.com/opencode-projects/ipfilter-caddy)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jpillora/ipfilter-caddy.svg)](https://pkg.go.dev/github.com/jpillora/ipfilter-caddy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jpillora/ipfilter-caddy)](https://goreportcard.com/report/github.com/jpillora/ipfilter-caddy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Caddy v2 plugin that provides geolocation-based request filtering using the jpillora/ipfilter library with IP2Location LITE data. Perfect for restricting access to specific countries without requiring external databases or API keys.
@@ -20,7 +20,7 @@ A Caddy v2 plugin that provides geolocation-based request filtering using the jp
 
 ### Option 1: Download Pre-built Binary
 
-Download a Caddy binary with this plugin pre-installed from the [releases page](https://github.com/opencode-projects/ipfilter-caddy/releases).
+Download a Caddy binary with this plugin pre-installed from the [releases page](https://github.com/jpillora/ipfilter-caddy/releases).
 
 ### Option 2: Build from Source
 
@@ -31,7 +31,7 @@ Download a Caddy binary with this plugin pre-installed from the [releases page](
 
 2. **Build Caddy with the plugin**:
    ```bash
-   xcaddy build --with github.com/opencode-projects/ipfilter-caddy
+   xcaddy build --with github.com/jpillora/ipfilter-caddy
    ```
 
 3. **Replace your existing Caddy binary**:
@@ -45,7 +45,7 @@ Download a Caddy binary with this plugin pre-installed from the [releases page](
 If you have Caddy installed via package manager:
 
 ```bash
-caddy add-package github.com/opencode-projects/ipfilter-caddy
+caddy add-package github.com/jpillora/ipfilter-caddy
 ```
 
 ## 🚀 Usage
@@ -316,7 +316,7 @@ import (
     "net/http"
     "net/http/httptest"
     "github.com/caddyserver/caddy/v2/modules/caddyhttp"
-    "github.com/opencode-projects/ipfilter-caddy"
+    "github.com/jpillora/ipfilter-caddy"
 )
 
 func TestAustraliaFilter(t *testing.T) {
@@ -344,7 +344,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/opencode-projects/ipfilter-caddy.git
+   git clone https://github.com/jpillora/ipfilter-caddy.git
    cd ipfilter-caddy
    ```
 
@@ -384,9 +384,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📖 [Documentation](https://github.com/opencode-projects/ipfilter-caddy#readme)
-- 🐛 [Issues](https://github.com/opencode-projects/ipfilter-caddy/issues)
-- 💬 [Discussions](https://github.com/opencode-projects/ipfilter-caddy/discussions)
+- 📖 [Documentation](https://github.com/jpillora/ipfilter-caddy#readme)
+- 🐛 [Issues](https://github.com/jpillora/ipfilter-caddy/issues)
+- 💬 [Discussions](https://github.com/jpillora/ipfilter-caddy/discussions)
 
 ---
 
