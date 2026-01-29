@@ -41,6 +41,16 @@ type IPFilterGeolocation struct {
 	// You can specify the special value "UNK" to match unrecognized countries.
 	DenyCountries []string `json:"deny_countries,omitempty"`
 
+	// A list of IP addresses or CIDR blocks to allow.
+	// Takes precedence over country rules and deny_ips.
+	// Examples: "192.168.1.1", "10.0.0.0/8", "2001:db8::/32"
+	AllowIPs []string `json:"allow_ips,omitempty"`
+
+	// A list of IP addresses or CIDR blocks to deny.
+	// Takes precedence over country rules but not allow_ips.
+	// Examples: "192.168.1.1", "10.0.0.0/8", "2001:db8::/32"
+	DenyIPs []string `json:"deny_ips,omitempty"`
+
 	// BlockByDefault sets the default behavior when no allow/deny rules match.
 	// When true, requests are blocked by default unless explicitly allowed.
 	// When false, requests are allowed by default unless explicitly denied.
@@ -79,6 +89,16 @@ func (m *IPFilterGeolocation) Provision(ctx caddy.Context) error {
 		for _, country := range m.DenyCountries {
 			opts.BlockedCountries = append(opts.BlockedCountries, country)
 		}
+	}
+
+	// Add allowed IPs/CIDRs
+	if len(m.AllowIPs) > 0 {
+		opts.AllowedIPs = append(opts.AllowedIPs, m.AllowIPs...)
+	}
+
+	// Add blocked IPs/CIDRs
+	if len(m.DenyIPs) > 0 {
+		opts.BlockedIPs = append(opts.BlockedIPs, m.DenyIPs...)
 	}
 
 	m.filter = ipfilter.New(opts)
@@ -129,6 +149,8 @@ The matcher configuration will have a single block with the following parameters
 
 - `allow_countries`: a space-separated list of allowed countries
 - `deny_countries`: a space-separated list of denied countries
+- `allow_ips`: a space-separated list of allowed IPs or CIDR blocks
+- `deny_ips`: a space-separated list of denied IPs or CIDR blocks
 - `block_by_default`: whether to block by default (true/false)
 
 Examples:
@@ -139,6 +161,16 @@ Examples:
 
 	ipfilter_geolocation {
 		deny_countries RU CN
+	}
+
+	ipfilter_geolocation {
+		allow_ips 192.168.1.0/24 10.0.0.0/8
+		block_by_default true
+	}
+
+	ipfilter_geolocation {
+		deny_ips 203.0.113.0/24
+		allow_countries AU US
 	}
 */
 func (m *IPFilterGeolocation) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
@@ -152,6 +184,10 @@ func (m *IPFilterGeolocation) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 				current = 2
 			case "block_by_default":
 				current = 3
+			case "allow_ips":
+				current = 4
+			case "deny_ips":
+				current = 5
 			default:
 				switch current {
 				case 1:
@@ -163,6 +199,10 @@ func (m *IPFilterGeolocation) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 						m.BlockByDefault = true
 					}
 					current = 0
+				case 4:
+					m.AllowIPs = append(m.AllowIPs, d.Val())
+				case 5:
+					m.DenyIPs = append(m.DenyIPs, d.Val())
 				default:
 					return fmt.Errorf("unexpected config parameter %s", d.Val())
 				}

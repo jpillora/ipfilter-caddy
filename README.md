@@ -10,6 +10,7 @@ A Caddy v2 plugin that provides geolocation-based request filtering using the jp
 
 - 🚀 **Zero Configuration**: No database downloads, API keys, or external dependencies required
 - 🌍 **Country-Based Filtering**: Allow or deny requests based on visitor country
+- 🌐 **CIDR Block Support**: Allow or deny specific IP addresses and CIDR ranges (IPv4 and IPv6)
 - 🔒 **Free Geolocation Data**: Uses IP2Location LITE database (completely free)
 - ⚡ **High Performance**: Embedded geolocation data with no network calls
 - 🛡️ **Thread-Safe**: Safe for concurrent request handling
@@ -64,6 +65,7 @@ caddy add-package github.com/jpillora/ipfilter-caddy
               "match": [
                 {
                   "ipfilter_geolocation": {
+                    "allow_ips": ["10.0.0.0/8", "192.168.0.0/16"],
                     "allow_countries": ["AU", "US", "CA"],
                     "block_by_default": true
                   }
@@ -72,7 +74,7 @@ caddy add-package github.com/jpillora/ipfilter-caddy
               "handle": [
                 {
                   "handler": "static_response",
-                  "body": "Welcome from allowed countries!"
+                  "body": "Welcome!"
                 }
               ]
             },
@@ -136,6 +138,8 @@ api.example.com {
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
+| `allow_ips` | `[]string` | `[]` | List of IP addresses or CIDR blocks to allow |
+| `deny_ips` | `[]string` | `[]` | List of IP addresses or CIDR blocks to deny |
 | `allow_countries` | `[]string` | `[]` | List of ISO country codes to allow |
 | `deny_countries` | `[]string` | `[]` | List of ISO country codes to deny |
 | `block_by_default` | `bool` | `false` | Block all requests by default unless explicitly allowed |
@@ -144,11 +148,22 @@ api.example.com {
 
 ```caddyfile
 ipfilter_geolocation {
+    allow_ips <ip_or_cidr...>
+    deny_ips <ip_or_cidr...>
     allow_countries <country_codes...>
     deny_countries <country_codes...>
     block_by_default <true|false>
 }
 ```
+
+### Rule Precedence
+
+Rules are evaluated in the following order (highest to lowest priority):
+
+1. **Explicit IP matches** - Single IP addresses checked first
+2. **CIDR subnet matches** - Allow takes precedence over deny within subnets
+3. **Country code matches** - Geolocation-based rules
+4. **Default behavior** - `block_by_default` setting applies if no rules match
 
 ## 🌍 Country Codes
 
@@ -229,7 +244,55 @@ global.example.com {
 }
 ```
 
-### 4. Debug Logging
+### 4. CIDR Block Filtering
+
+Allow internal networks and specific countries while blocking everything else:
+
+```caddyfile
+internal.example.com {
+    @allowed {
+        ipfilter_geolocation {
+            allow_ips 10.0.0.0/8 192.168.0.0/16 172.16.0.0/12 ::1/128
+            allow_countries AU US
+            block_by_default true
+        }
+    }
+
+    handle @allowed {
+        reverse_proxy localhost:3000
+    }
+
+    handle {
+        respond "Access denied" 403
+    }
+}
+```
+
+### 5. Mixed IP and Country Rules
+
+Block specific IP ranges while allowing certain countries:
+
+```caddyfile
+api.example.com {
+    @allowed {
+        ipfilter_geolocation {
+            deny_ips 203.0.113.0/24 198.51.100.0/24
+            allow_countries AU US CA GB
+            block_by_default true
+        }
+    }
+
+    handle @allowed {
+        reverse_proxy localhost:8080
+    }
+
+    handle {
+        respond "Forbidden" 403
+    }
+}
+```
+
+### 6. Debug Logging
 
 Enable debug logging to see IP-to-country mappings:
 
