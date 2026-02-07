@@ -1,10 +1,10 @@
 module github.com/jpillora/ipfilter-caddy
 
-go 1.22.3
+go 1.24.0
 
 require (
 	github.com/caddyserver/caddy/v2 v2.9.1
-	github.com/jpillora/ipfilter v1.2.9
+	github.com/jpillora/ipfilter v1.3.0
 	go.uber.org/zap v1.27.0
 )
 
@@ -63,7 +63,6 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/onsi/ginkgo/v2 v2.13.2 // indirect
-	github.com/phuslu/iploc v1.0.20230630 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.20.5 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
@@ -103,7 +102,7 @@ require (
 	golang.org/x/mod v0.18.0 // indirect
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
 	golang.org/x/term v0.27.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.7.0 // indirect
