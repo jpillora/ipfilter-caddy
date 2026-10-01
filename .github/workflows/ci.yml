@@ -15,12 +15,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
-        go: [ '1.24', '1.25' ]
+        go: [ '1.25', '1.26' ]
 
         include:
         # Set the minimum Go patch version for the given Go minor
-        - go: '1.24'
-          GO_SEMVER: '~1.24.0'
+        - go: '1.26'
+          GO_SEMVER: '~1.26.0'
         - go: '1.25'
           GO_SEMVER: '~1.25.0'
 
@@ -72,7 +72,7 @@ jobs:
       if: runner.os != 'macOS'
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-        ~/go/bin/xcaddy build --with github.com/jpillora/ipfilter-caddy
+        ~/go/bin/xcaddy build --with github.com/jpillora/ipfilter-caddy=.
 
     - name: Skip xcaddy build on macOS
       if: runner.os == 'macOS'

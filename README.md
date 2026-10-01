@@ -4,14 +4,14 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/jpillora/ipfilter-caddy)](https://goreportcard.com/report/github.com/jpillora/ipfilter-caddy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Caddy v2 plugin that provides geolocation-based request filtering using the jpillora/ipfilter library with IP2Location LITE data. Perfect for restricting access to specific countries without requiring external databases or API keys.
+A Caddy v2 plugin that provides geolocation-based request filtering using the jpillora/ipfilter library with embedded MaxMind GeoLite2-Country data. Perfect for restricting access to specific countries without requiring external databases or API keys.
 
 ## ✨ Features
 
 - 🚀 **Zero Configuration**: No database downloads, API keys, or external dependencies required
 - 🌍 **Country-Based Filtering**: Allow or deny requests based on visitor country
 - 🌐 **CIDR Block Support**: Allow or deny specific IP addresses and CIDR ranges (IPv4 and IPv6)
-- 🔒 **Free Geolocation Data**: Uses IP2Location LITE database (completely free)
+- 🔒 **Free Geolocation Data**: Uses embedded MaxMind GeoLite2-Country database (completely free)
 - ⚡ **High Performance**: Embedded geolocation data with no network calls
 - 🛡️ **Thread-Safe**: Safe for concurrent request handling
 - 📝 **Full Caddy Support**: JSON and Caddyfile configuration support
@@ -48,6 +48,11 @@ If you have Caddy installed via package manager:
 ```bash
 caddy add-package github.com/jpillora/ipfilter-caddy
 ```
+
+GeoLite2 country data is embedded in the `ipfilter` dependency at build time.
+To refresh it, update that dependency, rebuild Caddy with all existing plugins,
+and restart Caddy with the new binary. A configuration reload does not refresh
+the embedded database.
 
 ## 🚀 Usage
 
@@ -319,7 +324,7 @@ This will show logs like:
 
 - **Module ID**: `http.matchers.ipfilter_geolocation`
 - **Type**: HTTP Request Matcher
-- **Dependencies**: jpillora/ipfilter (with embedded IP2Location LITE data)
+- **Dependencies**: jpillora/ipfilter (with embedded MaxMind GeoLite2-Country data)
 
 ### How It Works
 
